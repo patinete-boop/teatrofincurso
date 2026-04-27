@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Programado por Joaquín Fdez -->
+<!-- Colegio Diocesano de Educación Especial Niño Jesus. -->
+<!-- Fundación Santos Martires de CORDOBA -->
+<head>
+  <meta charset="UTF-8" />
+  <title>Mesa de Ensayo – Selector de pista</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #f59e0b;
+      --accent-soft: #fbbf24;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    /* Selector de pistas */
+    .track-button {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--card);
+      border: 2px solid var(--accent);
+      border-radius: 0.8rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      transition: transform 0.1s ease;
+    }
+
+    .track-button:active {
+      transform: scale(0.97);
+    }
+
+    /* Pantalla de controles */
+    .controls-screen {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 1rem;
+      border-radius: 0.6rem;
+      border: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #111827;
+    }
+
+    .btn-stop {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-back {
+      background: var(--card);
+      color: var(--muted);
+      border: 2px solid var(--muted);
+    }
+
+    .btn-loop-on {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--success);
+      border: 2px solid var(--success);
+    }
+
+    .btn-loop-off {
+      background: rgba(31, 41, 55, 0.9);
+      color: var(--muted);
+      border: 2px solid rgba(55, 65, 81, 0.9);
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .time {
+      font-size: 1rem;
+      text-align: right;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <h1>Ensayo rápido</h1>
+
+    <!-- Pantalla 1: Selector -->
+    <div id="selector"></div>
+
+    <!-- Pantalla 2: Controles -->
+    <div id="controlsScreen" class="controls-screen">
+      <div class="title" id="trackTitle"></div>
+      <div class="time" id="timeInfo">0:00 / 0:00</div>
+
+      <input type="range" id="progress" min="0" max="100" value="0">
+      <input type="range" id="volume" min="0" max="1" step="0.05" value="1">
+
+      <button id="btnPlay" class="btn btn-main">▶︎ / ❚❚</button>
+      <button id="btnStop" class="btn btn-stop">Parar</button>
+      <button id="btnLoop" class="btn btn-loop-off">Loop</button>
+
+      <button id="btnFullscreen" class="btn btn-main">Pantalla completa</button>
+
+      <button id="btnBack" class="btn btn-back">Volver al selector</button>
+    </div>
+
+  </div>
+
+  <script>
+    const TRACKS = [
+      { title: "Voz en Off – Apertura", file: "entradaenoff.mp3" },
+      { title: "Canción 1 – Escena 1", file: "cancion1.mp3" },
+      { title: "Canción 2 – Escena 2", file: "cancion2.mp3" },
+      { title: "Canción 3 – Escena 3", file: "cancion3.mp3" },
+      { title: "Canción 4 – Escena 4", file: "cancion4.mp3" },
+      { title: "Canción 5 – Escena 5", file: "cancion5.mp3" },
+      { title: "Concurso  – Escena 6", file: "cancion6.mp3" },
+      { title: "Canción Final", file: "cancionfinal.mp3" }
+    ];
+
+    const selector = document.getElementById("selector");
+    const controlsScreen = document.getElementById("controlsScreen");
+
+    const trackTitle = document.getElementById("trackTitle");
+    const timeInfo = document.getElementById("timeInfo");
+    const progress = document.getElementById("progress");
+    const volume = document.getElementById("volume");
+
+    const btnPlay = document.getElementById("btnPlay");
+    const btnStop = document.getElementById("btnStop");
+    const btnLoop = document.getElementById("btnLoop");
+    const btnBack = document.getElementById("btnBack");
+    const btnFullscreen = document.getElementById("btnFullscreen");
+
+    let audio = null;
+    let loopEnabled = false;
+
+    function formatTime(sec) {
+      if (isNaN(sec)) return "0:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60).toString().padStart(2, "0");
+      return `${m}:${s}`;
+    }
+
+    // Crear botones grandes del selector
+    TRACKS.forEach((t, i) => {
+      const btn = document.createElement("button");
+      btn.className = "track-button";
+      btn.textContent = t.title;
+
+      btn.addEventListener("click", () => {
+        selector.style.display = "none";
+        controlsScreen.style.display = "flex";
+
+        if (audio) audio.pause();
+        audio = new Audio(t.file);
+        audio.preload = "metadata";
+
+        trackTitle.textContent = t.title;
+        loopEnabled = false;
+        btnLoop.className = "btn btn-loop-off";
+        btnLoop.textContent = "Loop";
+
+        audio.addEventListener("loadedmetadata", () => {
+          timeInfo.textContent = `0:00 / ${formatTime(audio.duration)}`;
+        });
+
+        audio.addEventListener("timeupdate", () => {
+          progress.value = (audio.currentTime / audio.duration) * 100;
+          timeInfo.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        });
+      });
+
+      selector.appendChild(btn);
+    });
+
+    // Controles
+    btnPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    btnStop.addEventListener("click", () => {
+      audio.pause();
+      audio.currentTime = 0;
+      progress.value = 0;
+    });
+
+    btnLoop.addEventListener("click", () => {
+      loopEnabled = !loopEnabled;
+      audio.loop = loopEnabled;
+
+      if (loopEnabled) {
+        btnLoop.className = "btn btn-loop-on";
+        btnLoop.textContent = "Loop ON";
+      } else {
+        btnLoop.className = "btn btn-loop-off";
+        btnLoop.textContent = "Loop";
+      }
+    });
+
+    progress.addEventListener("input", () => {
+      audio.currentTime = (progress.value / 100) * audio.duration;
+    });
+
+    volume.addEventListener("input", () => {
+      audio.volume = volume.value;
+    });
+
+    // Pantalla completa
+    btnFullscreen.addEventListener("click", () => {
+      const elem = document.documentElement;
+
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          console.log("Error al activar pantalla completa:", err);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    btnBack.addEventListener("click", () => {
+      if (audio) audio.pause();
+      controlsScreen.style.display = "none";
+      selector.style.display = "block";
+    });
+  </script>
+</body>
+</html>
+

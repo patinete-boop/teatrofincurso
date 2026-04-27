@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<!-- Autor de guion, canciones y letras: Joaquín Fdez. Postigo -->
+<!-- Codigo html:Joaquín Fdez. Postigo -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Teatro Notalandia – Guion Completo</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: #f4f4f4;
+        display: flex;
+    }
+
+    /* MENÚ LATERAL */
+    #sidebar {
+        width: 240px;
+        background: #283e51;
+        color: white;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        padding-top: 30px;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+    }
+
+    #sidebar h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
+
+    #sidebar a {
+        display: block;
+        padding: 12px 20px;
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        border-left: 4px solid transparent;
+        transition: 0.3s;
+    }
+
+    #sidebar a:hover {
+        background: #4b79a1;
+        border-left: 4px solid #fff;
+    }
+
+    /* CONTENIDO PRINCIPAL */
+    #content {
+        margin-left: 260px;
+        padding: 40px;
+        width: calc(100% - 260px);
+    }
+
+    h1 {
+        color: #283e51;
+        font-size: 2.4rem;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #4b79a1;
+        border-left: 6px solid #283e51;
+        padding-left: 10px;
+        margin-top: 50px;
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    /* BLOQUES DE CANCIÓN (se usarán en Parte 2) */
+    .song-block {
+        margin: 20px 0;
+        padding: 15px;
+        background: #eef2f5;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .toggle-btn {
+        background: #4b79a1;
+        color: white;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+
+    .toggle-btn:hover {
+        background: #35516b;
+    }
+
+    .letra {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background: #fff;
+        border-radius: 8px;
+        white-space: pre-line;
+        border: 1px solid #ccc;
+    }
+
+    audio {
+        width: 100%;
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+function toggleSong(id) {
+    const block = document.getElementById(id);
+    block.style.display = block.style.display === "block" ? "none" : "block";
+}
+
+function toggleLetra(id) {
+    const block = document.getElementById(id);
+    block.style.display = block.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</head>
+<body>
+
+<!-- MENÚ LATERAL -->
+<div id="sidebar" style="padding: 18px;">
+
+    <p style="font-size: 0.70rem; 
+              text-align: center; 
+              margin: 0 10px 12px 10px; 
+              color: #d0d0d0; 
+              font-style: italic;">
+        Propuesta por: J. Fdez.
+    </p>
+
+    <h2 style="font-size: 1.15rem; margin-bottom: 12px;">NOTALANDIA</h2>
+
+    <a href="#prologo" style="font-size: 0.9rem; padding: 5px 0; display:block;">Prólogo</a>
+    <a href="#acto1" style="font-size: 0.9rem; padding: 5px 0; display:block;">Acto 1</a>
+    <a href="#acto2" style="font-size: 0.9rem; padding: 5px 0; display:block;">Acto 2</a>
+    <a href="#acto3" style="font-size: 0.9rem; padding: 5px 0; display:block;">Acto 3</a>
+    <a href="#acto4" style="font-size: 0.9rem; padding: 5px 0; display:block;">Acto 4</a>
+    <a href="#acto5" style="font-size: 0.9rem; padding: 5px 0; display:block;">Acto 5</a>
+    <a href="#acto6" style="font-size: 0.9rem; padding: 5px 0; display:block;">Acto 6</a>
+    <a href="#final" style="font-size: 0.9rem; padding: 5px 0; display:block;">Acto Final</a>
+
+    <hr style="border: 0; border-top: 1px solid #4b79a1; margin: 14px 10px;">
+
+    <!-- Botón PDF -->
+    <a href="Guion_Notalandia.pdf" 
+       download 
+       style="display: block;
+              margin: 14px auto;
+              text-align: center;
+              background: #4b79a1;
+              padding: 8px 12px;
+              border-radius: 6px;
+              color: white;
+              font-size: 0.85rem;
+              text-decoration: none;
+              width: 80%;
+              transition: 0.3s;">
+        Descargar PDF
+    </a>
+
+    <!-- Botón para abrir el modal -->
+    <a href="#" 
+       onclick="abrirModal()"
+       style="display: block;
+              margin: 14px auto;
+              text-align: center;
+              background: #4b79a1;
+              padding: 8px 12px;
+              border-radius: 6px;
+              color: white;
+              font-size: 0.85rem;
+              text-decoration: none;
+              width: 80%;
+              transition: 0.3s;">
+        Ver escenario
+    </a>
+
+</div>
+
+
+<!-- MODAL PARA VER LA IMAGEN DEL ESCENARIO -->
+<div id="modalEscenario" 
+     style="display:none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(3px);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;">
+    
+    <div id="modalContenido"
+         style="background: white;
+                padding: 15px;
+                border-radius: 10px;
+                max-width: 90%;
+                max-height: 90%;
+                text-align: center;
+                position: relative;">
+        
+        <!-- Botón cerrar -->
+        <button onclick="cerrarModal()" 
+                style="position: absolute;
+                       top: 10px;
+                       right: 10px;
+                       background: #c0392b;
+                       color: white;
+                       border: none;
+                       padding: 6px 10px;
+                       border-radius: 4px;
+                       cursor: pointer;">
+            Cerrar
+        </button>
+
+        <!-- Imagen -->
+        <img src="escenario.jpg" 
+             alt="Escenario Notalandia"
+             style="max-width: 100%;
+                    max-height: 80vh;
+                    border-radius: 8px;">
+    </div>
+</div>
+
+<script>
+function abrirModal() {
+    document.getElementById("modalEscenario").style.display = "flex";
+}
+
+function cerrarModal() {
+    document.getElementById("modalEscenario").style.display = "none";
+}
+
+/* Cerrar al hacer clic fuera del contenido */
+document.getElementById("modalEscenario").addEventListener("click", function(e) {
+    if (e.target === this) {
+        cerrarModal();
+    }
+});
+</script>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div id="content">
+    <h1>Guion Completo del Teatro Notalandia</h1>
+
+<h2 id="prologo">PRÓLOGO EN VOZ EN OFF + ESCENA INICIAL</h2>
+
+<p>
+En un colegio como cualquier otro… o quizá no tanto, existía un recreo muy especial.
+Para los adultos era solo un patio, pero para los alumnos… era la puerta a un mundo secreto.
+Ese mundo se llamaba <b>NOTALANDIA</b>: un reino nacido de la música, del juego y de la imaginación.
+Allí, cada nota tenía color, cada paso de baile abría caminos nuevos, y cada voz podía cambiar la historia.
+Pero no siempre fue así. Hubo un tiempo en que el Rey Silencio gobernaba el recreo.
+Un rey serio, rígido y un poquito gruñón, que no soportaba los ruidos, ni los cantos, ni los bailes.
+Decía que el recreo debía ser tranquilo, sin concursos musicales, sin fiestas, sin alegría desbordada.
+Y así, poco a poco, el reino fue perdiendo su brillo… hasta que un día, algo cambió.
+</p>
+
+<p>
+Aparecen los alumnos en escena, sentados, aburridos.
+</p>
+
+<h2>ESCENA 1 — “EL RECREO ABURRIDO”</h2>
+
+<p>
+<b>ALUMNO 1:</b> (Aburrido) No hay nada que hacer… siempre lo mismo.<br>
+<b>ALUMNO 2:</b> Ojalá pasara algo divertido.<br>
+<b>ALUMNO 3:</b> Antes cantábamos, bailábamos… ¿os acordáis?<br><br>
+
+(Entra el maestro del recreo.)<br><br>
+
+<b>MAESTRO:</b> Vaya, vaya… ¿qué caras son esas? ¿Sabéis que cuando yo era pequeño, en este mismo patio, existía un reino mágico?<br>
+<b>ALUMNOS:</b> ¿Un reino?<br>
+<b>MAESTRO:</b> Sí… un reino llamado Notalandia. Un lugar donde la música lo llenaba todo. Pero… hubo un problema.<br>
+El Rey Silencio decidió que ya no quería más canciones. Ni bailes. Ni risas fuertes.<br><br>
+
+<b>ALUMNO 1:</b> ¿Y por qué haría eso?<br>
+<b>MAESTRO:</b> Porque temía que si la música volvía a sonar, los alumnos organizaran un gran concurso musical… y ese concurso acabaría convirtiéndose en la fiesta más grande del colegio.<br><br>
+
+<b>ALUMNO 2:</b> ¿Y qué pasó entonces?<br>
+<b>MAESTRO:</b> Eso… solo lo descubriréis si estáis dispuestos a viajar conmigo.<br><br>
+
+<b>ALUMNO 3:</b> ¡Queremos ir!<br>
+<b>MAESTRO:</b> Entonces cerrad los ojos… respirad hondo… y dejad que la música os lleve.
+</p>
+
+<h2 id="acto1">ACTO 1 – EL DÍA QUE LA MÚSICA DESAPARECIÓ DEL RECREO</h2>
+
+<p>
+(Luz suave. Sonido de pájaros. MELODÍA entra cantando fatal.)<br><br>
+
+<b>MELODÍA:</b> La-la-la… ¡Ay madre! ¿Por qué sueno como si me hubiera tragado una flauta rota?<br><br>
+
+(TONO entra con un megáfono apagado.)<br><br>
+
+<b>TONO:</b> ¡Atención, atención! ¡Voy a cantar mi nuevo hit del verano!<br>
+(Lo enciende… no suena nada.)<br>
+¿Pero qué…? ¿Se ha quedado sin pilas o sin ganas?<br><br>
+
+(RITMO entra corriendo, tropieza y cae.)<br><br>
+
+<b>RITMO:</b> ¡He llegado! ¡He llegado! ¿Qué me he perdido? ¿Ya desafinamos sin mí?<br><br>
+
+(SILENCIO entra haciendo un gesto dramático de “no se oye nada”.)<br><br>
+
+<b>MELODÍA:</b> Chicos… esto no es normal. Algo raro pasa.<br><br>
+
+(Se escucha un “¡SHHHHH!” gigante que retumba.)<br><br>
+
+<b>REY SILENCIO (fuera de escena):</b> ¡En mi reino NO se canta! ¡Ni se tararea! ¡Ni se hace beatbox en el recreo!<br><br>
+
+(Los cuatro se asustan.)<br><br>
+
+<b>TONO:</b> ¿Quién ha sido ese? ¿Un altavoz gigante? ¿Un maestro enfadado?<br><br>
+
+(Entra el REY SILENCIO con capa, exagerado.)<br><br>
+
+<b>REY SILENCIO:</b> ¡He sido yo! ¡El único, incomparable, inigualable… Rey Silencio!<br>
+Y he venido a recordaros que aquí… ¡se vive en paz!<br>
+Nada de ruidos, nada de canciones, nada de “la-la-la”.<br><br>
+
+<b>MELODÍA:</b> Pero Majestad… ¡si cantar es alegría!<br><br>
+
+<b>REY SILENCIO:</b> ¡La alegría hace ruido! Y el ruido… ¡me da dolor de cabeza!<br><br>
+
+(Se va con un gesto dramático.)<br><br>
+
+Entra en escena Clase 1.<br>
+</p>
+
+<h3>CANCIÓN 1 – Aquí no se puede cantar</h3>
+<button class="toggle-btn" onclick="toggleSong('song1')">Mostrar / Ocultar canción</button>
+
+<div id="song1" class="song-block">
+    <audio controls src="Cancion1.mp3"></audio>
+
+    <button class="toggle-btn" onclick="toggleLetra('letra1')">Mostrar / Ocultar letra</button>
+    <div id="letra1" class="letra">
+En Notalandia hoy desperté,
+quise cantar y me asusté.
+Un “¡ssssshhhhh!” gigante escuché sonar,
+¿qué está pasando? ¿qué va a pasar?
+
+Tono no suena, Ritmo se cae,
+Melodía grita y Silencio no habla.
+Todo es muy raro, algo va mal,
+¿quién nos quiere aquí callar?
+
+Aquí no se puede cantar,
+el Rey nos quiere callar.
+Pero aunque diga “shhh”,
+la música quiere sonar.
+
+Aquí no se puede cantar,
+pero no nos va a parar.
+Porque en nuestro corazón
+la música quiere jugar.
+
+Por los rincones pude encontrar
+a Notas tristes sin poder volar.
+“Nos apagaron”, dijeron así,
+“pero contigo podemos seguir”.
+
+Ritmo se anima, Tono volvió,
+Melodía dice “ya no tengo miedo”.
+Si estamos juntos, nada irá mal,
+nadie nos puede aquí callar.
+
+Aquí no se puede cantar,
+el Rey nos quiere callar.
+Pero aunque diga “shhh”,
+la música quiere sonar.
+
+Aquí no se puede cantar,
+pero no nos va a parar.
+Porque en nuestro corazón
+la música quiere jugar.
+
+Y aunque el Rey grite “silencio total”,
+la música es libre, no se puede encerrar.
+Late en las manos, late en los pies,
+late en el alma de quien quiere creer.
+
+Aquí no se puede cantar,
+el Rey nos quiere callar.
+Pero aunque diga “ssssshhhhhh”,
+la música quiere sonar.
+
+Aquí no se puede cantar,
+pero no nos va a parar.
+Porque en nuestro corazón
+la música quiere jugar.
+    </div>
+</div>
+
+<p>
+Sale de escena Clase 1.
+</p>
+
+<h2 id="acto2">ACTO 2 – LA MISIÓN IMPOSIBLE</h2>
+
+<p>
+<b>TONO:</b> ¿Se ha ido ya? ¿Estamos solos?<br>
+He escuchado un rumor…<br><br>
+
+Si este año nadie se presenta al concurso de canto y baile que organiza el colegio, no habrá fiesta de fin de curso y… ¡Notalandia desaparecerá de las actividades del recreo!<br><br>
+
+<b>MELODÍA:</b> ¿Queeeeeee? ¡Eso sería horrible! ¿Un recreo sin música?<br><br>
+
+<b>RITMO:</b> ¿Y sin bailes? ¿Y sin ritmos? ¿Y sin… caídas mías?<br><br>
+
+(SILENCIO hace un gesto de “qué tragedia”.)<br><br>
+
+(El Rey Silencio aparece espiando desde un lateral.)<br><br>
+
+<b>REY SILENCIO:</b> A ver qué traman estos ruidosos…<br><br>
+
+<b>TONO:</b> ¡Necesitamos ayuda! Tenemos que participar en el concurso. Aunque… bueno… cantemos fatal.<br><br>
+
+<b>RITMO:</b> Fatal es poco. Somos… somos…<br><br>
+
+(SILENCIO hace un gesto enorme de “desastre total”.)<br><br>
+
+<b>MELODÍA:</b> Sí, somos un desastre… ¡pero somos un desastre con corazón! ¡Y lo vamos a intentar!<br><br>
+
+Entra en escena Clase 2.<br>
+</p>
+
+<h3>CANCIÓN 2 – Somos un desastre, pero vamos a intentar</h3>
+<button class="toggle-btn" onclick="toggleSong('song2')">Mostrar / Ocultar canción</button>
+
+<div id="song2" class="song-block">
+    <audio controls src="Cancion2.mp3"></audio>
+
+    <button class="toggle-btn" onclick="toggleLetra('letra2')">Mostrar / Ocultar letra</button>
+    <div id="letra2" class="letra">
+VERSO 1
+
+Tono se olvida siempre la letra,
+Ritmo se enreda con su chaqueta.
+Melodía canta como un cohete,
+y Silencio… bueno, él ni se mete.
+
+PRE-ESTRIBILLO 1
+
+Pero tenemos ganas,
+tenemos ilusión.
+Aunque desafinemos,
+ponemos corazón.
+
+ESTRIBILLO
+
+Somos un desastre, pero vamos a intentar,
+aunque salga mal, lo vamos a lograr.
+Somos un desastre, pero juntos mucho más,
+porque cuando reímos, todo suena genial.
+
+VERSO 2
+
+Compás se tropieza con la escalera,
+Tempo se adelanta como si corriera.
+Armonía sueña con ser estrella,
+y el público aplaude… aunque no entienda nada de ella.
+
+PRE-ESTRIBILLO 2
+
+Porque seguimos juntos,
+aunque salga fatal.
+Si uno se equivoca,
+los demás dan igual.
+
+ESTRIBILLO
+
+Somos un desastre, pero vamos a intentar,
+aunque salga mal, lo vamos a lograr.
+Somos un desastre, pero juntos mucho más,
+porque cuando reímos, todo suena genial.
+
+PUENTE
+
+Si tú te caes, yo te levanto,
+si yo me pierdo, tú me das un canto.
+Y aunque no salga perfecto jamás,
+¡lo importante es disfrutar!
+
+ESTRIBILLO FINAL (repetido)
+
+Somos un desastre, pero vamos a intentar,
+aunque salga mal, lo vamos a lograr.
+Somos un desastre, pero juntos mucho más,
+porque cuando reímos, todo suena genial.
+
+Somos un desastre, pero vamos a intentar,
+aunque salga mal, lo vamos a lograr.
+Somos un desastre, pero juntos mucho más,
+¡y en este escenario todo suena genial!
+
+OUTRO
+
+Desastre o no, seguimos sin parar,
+porque en este grupo… ¡venimos a disfrutar!
+    </div>
+</div>
+
+<p>
+Sale de escena Clase 2.
+</p>
+<h2 id="acto3">ACTO 3 – CLASES DE RITMO CON DON COMPÁS</h2>
+
+<p>
+(DON COMPÁS entra con un metrónomo gigante.)<br><br>
+
+<b>DON COMPÁS:</b> ¡Qué estoy escuchando! ¿Quién es un desastre? ¿Vosotros?<br>
+¡Pues bienvenidos a mi clase!<br><br>
+
+Aquí aprenderéis a seguir el ritmo… o al menos a intentarlo.<br>
+¡Notalandia no desaparecerá!<br><br>
+
+(Alguna música de chasquidos de dedos, todos imitando a Don Compás.)<br><br>
+
+(El Rey Silencio aparece detrás del metrónomo.)<br><br>
+
+<b>REY SILENCIO:</b> ¿Ritmo? ¿Ritmo? ¡Qué palabra tan peligrosa!<br><br>
+
+(Juego de palmadas.)<br><br>
+
+Entra en escena Clase 3.<br>
+</p>
+
+<h3>CANCIÓN 3 – Sigue el ritmo si puedes</h3>
+<button class="toggle-btn" onclick="toggleSong('song3')">Mostrar / Ocultar canción</button>
+
+<div id="song3" class="song-block">
+    <audio controls src="Cancion3.mp3"></audio>
+
+    <button class="toggle-btn" onclick="toggleLetra('letra3')">Mostrar / Ocultar letra</button>
+    <div id="letra3" class="letra">
+VERSO 1
+
+Don Compás llegó marcando el paso,
+con su sombrero y metrónomo al brazo.
+“Uno, dos, tres”, nos hace cantar,
+pero Ritmo siempre va a descompás.
+
+¡Ay, qué despiste!, vuelve a empezar,
+que aquí venimos todos a disfrutar.
+
+PRE-ESTRIBILLO
+
+Palmada arriba, palmada abajo,
+si te equivocas, no pasa nada.
+Respira hondo, vuelve a intentar,
+que el ritmo siempre te va a acompañar.
+
+ESTRIBILLO
+
+Sigue el ritmo si puedes,
+paso a paso sin correr.
+Si te pierdes, no te preocupes,
+¡vuelve a empezar otra vez!
+
+Sigue el ritmo si puedes,
+que la música es tu amiga.
+Y aunque falles mil veces,
+¡la alegría nunca se olvida!
+
+VERSO 2
+
+Ritmo salta, gira y se adelanta,
+da una vuelta y luego se espanta.
+Don Compás ríe y le dice: “¡Ven!
+Que el ritmo nace donde estás tú también”.
+
+Mueve la cintura, siente los pies,
+mira a la clase y cuenta otra vez.
+
+Todos unidos suena mejor,
+¡que el ritmo en grupo tiene más sabor!
+
+PRE-ESTRIBILLO 2
+
+Marca suave, siente el compás,
+no tengas prisa, tú puedes más.
+Si te tropiezas, vuelve a intentar,
+que en esta fiesta nadie va a juzgar.
+
+ESTRIBILLO
+
+Sigue el ritmo si puedes,
+paso a paso sin correr.
+Si te pierdes, no te preocupes,
+¡vuelve a empezar otra vez!
+
+Sigue el ritmo si puedes,
+que la música es tu amiga.
+Y aunque falles mil veces,
+¡la alegría nunca se olvida!
+
+PUENTE
+
+Toc-toc-toc, suena el corazón,
+pum-pum-pum, marca la canción.
+Si tú lo sientes, déjate llevar,
+¡que el ritmo te quiere abrazar!
+
+Sube las manos, vuelve a girar,
+¡que esta fiesta acaba de empezar!
+
+ESTRIBILLO FINAL
+
+Sigue el ritmo si puedes,
+que juntos suena mejor.
+
+Cada paso, cada intento,
+¡va llenando de luz la canción!
+
+Sigue el ritmo si puedes,
+no hace falta ser perfecto.
+Lo importante es disfrutarlo,
+¡y moverse con el cuerpo!
+
+OUTRO
+
+Uno, dos, tres… volvemos a empezar,
+Ritmo sonríe y ya no va mal.
+Don Compás guiando con emoción,
+¡y toda la clase sigue la canción!
+    </div>
+</div>
+
+<p>
+Salida de escena Clase 3.<br>
+<i>(Nota: decidir si Don Compás permanece en escena o no.)</i>
+</p>
+<h2 id="acto4">ACTO 4 – LA VOZ MÁS LOCA DEL MUNDO</h2>
+
+<p>
+(DOÑA VOCALÍA entra con un abrigo lleno de instrumentos.)<br><br>
+
+<b>DOÑA VOCALÍA:</b> Hola, holaaa, ¡hola hola!<br>
+Soy Doña Vocalía.<br><br>
+
+Me ha llamado Don Compás para que os eche una mano.<br>
+¡Bienvenidos a la clase de voz más loca del planeta!<br><br>
+
+Hoy vamos a calentar… ¡como nunca! Las cuerdas vocales.<br><br>
+
+<b>DOÑA VOCALÍA:</b> A ver, niños, repetid conmigo:<br>
+“mi-mi-mi…”<br>
+“pa-pa-paaaaa”<br>
+“trrrrrrr-trrrrrr”<br><br>
+
+Y ahora… ¡papás y mamás!<br>
+“mi-mi-mi…”<br>
+“pa-pa-paaaaa”<br>
+“trrrrrrr-trrrrrr”<br><br>
+
+Ahora todos juntos:<br>
+“mi-mi-mi…” “pa-pa-paaaaa” “trrrrrrr-trrrrrr”<br><br>
+
+(El Rey Silencio aparece con tapones gigantes.)<br><br>
+
+<b>REY SILENCIO:</b> ¡Esto es INSOPORTABLE! ¡Qué griterío más molestoooooo!<br><br>
+
+Entra en escena Clase 4.<br>
+</p>
+
+<h3>CANCIÓN 4 – Calienta que te calienta</h3>
+<button class="toggle-btn" onclick="toggleSong('song4')">Mostrar / Ocultar canción</button>
+
+<div id="song4" class="song-block">
+    <audio controls src="Cancion4.mp3"></audio>
+
+    <button class="toggle-btn" onclick="toggleLetra('letra4')">Mostrar / Ocultar letra</button>
+    <div id="letra4" class="letra">
+VERSO 1
+
+Doña Vocalía entra bailando,
+con mil instrumentos colgando.
+“Hoy calentamos la voz,
+pero lo haremos los dos.”
+
+PRE‑ESTRIBILLO
+
+Mi-mi-mi como un robot,
+pa-pa-pa como un pato loco.
+Trrrrrrr como un coche veloz,
+¡qué divertido es hacer la voz!
+
+ESTRIBILLO
+
+Calienta que te calienta,
+la voz se despierta ya.
+Haz sonidos divertidos,
+y verás cómo saldrá.
+
+Calienta que te calienta,
+no te vayas a cansar.
+Que cuando llegue el concurso,
+¡listo vas a estar!
+
+VERSO 2
+
+Doña Vocalía sigue el paso,
+marca el ritmo con su gran abrazo.
+“Respira hondo, siente el compás,
+que tu garganta pide un poco más.”
+
+PRE‑ESTRIBILLO 2
+
+Lu-lu-lu como un tren en marcha,
+fa-fa-fa que la energía no baja.
+Shhh-shhh-shhh como viento veloz,
+¡mira qué fuerte se oye tu voz!
+
+ESTRIBILLO
+
+Calienta que te calienta… (repetir igual)
+
+PUENTE
+
+Sube la voz, baja la voz,
+haz un sonido que inventes tú.
+Canta despacio, canta veloz,
+¡que tu voz brille como la luz!
+
+BREAK RÍTMICO
+
+Eh‑eh, mueve el cuello un poquito,
+ah‑ah, que suene suavecito.
+Oh‑oh, ahora más fuerte va,
+¡tu voz preparada está!
+
+ESTRIBILLO FINAL + AD‑LIBS
+
+(repetir estribillo con coros y adornos)
+
+OUTRO
+
+Doña Vocalía se va marchando,
+pero tu voz sigue brillando.
+“Practica siempre, no dudes más,
+que con tu ritmo… ¡todo saldrá!”
+    </div>
+</div>
+
+<p>
+Sale de escena Clase 4.<br>
+<i>(Nota: decidir si Doña Vocalía permanece en escena o no.)</i>
+</p>
+<h2 id="acto5">ACTO 5 – EL ENSAYO DEL CAOS</h2>
+
+<p>
+(Los protagonistas entran al escenario con instrumentos, ganas… y cero coordinación.)<br><br>
+
+<b>TONO:</b> ¡Vale equipo! Este es el momento. Si queremos salvar Notalandia, tenemos que ensayar nuestra canción final.<br>
+¡A la de tres! Uno… dos… ¡tres!<br><br>
+
+(Empiezan a cantar y todo sale mal.)<br><br>
+
+<b>RITMO</b> (entra tarde): ¡Ay! ¿Ya habéis empezado? ¡Repetid, repetid!<br>
+(Se tropieza con un cable.)<br><br>
+
+<b>RITMO:</b> Vamos allá.<br>
+(Suena una música caótica.)<br><br>
+
+<b>MELODÍA</b> (canta demasiado fuerte): ¡Laaaaaa!<br>
+(Se apaga una luz del escenario.)<br>
+Uy… creo que he roto algo.<br><br>
+
+<b>TONO</b> (se inventa la letra): “En el verano del sol brillanteee… y el helado giganteee…”<br>
+(Los demás lo miran raro.)<br>
+¿Qué? ¿No era así?<br><br>
+
+(SILENCIO toca una pandereta… perfectamente. Todos se quedan mirándolo.)<br><br>
+
+<b>MELODÍA:</b> Creo que… Silencio es el único que lo está haciendo bien.<br><br>
+
+<b>RITMO:</b> ¡Pero si ni habla!<br><br>
+
+(SILENCIO hace un gesto de “es cuestión de práctica”.)<br><br>
+
+(Aparece el REY SILENCIO desde un lateral, disfrutando del desastre.)<br><br>
+
+<b>REY SILENCIO:</b> ¡JA! ¡Esto sí que me encanta! ¡Desafinados, descoordinados y desastrosos!<br>
+Si seguís así… ¡Notalandia desaparecerá sin que yo tenga que hacer nada!<br><br>
+
+<b>TONO:</b> Pues no, Majestad. Puede que seamos un desastre… pero somos un desastre que no se rinde.<br><br>
+
+<b>MELODÍA:</b> Y cuando algo sale mal… ¡lo volvemos a intentar!<br><br>
+
+<b>RITMO:</b> Y si me caigo… ¡me levanto bailando!<br><br>
+
+(SILENCIO hace un gesto de “vamos allá”.)<br><br>
+
+<b>TONO:</b> ¡Venga! ¡Una vez más! ¡Con ganas! ¡Como si estuviéramos en un concierto y todos juntos!<br><br>
+
+Entra en escena Clase 5.<br>
+</p>
+
+<h3>CANCIÓN 5 – Juntos sonamos mejor</h3>
+<button class="toggle-btn" onclick="toggleSong('song5')">Mostrar / Ocultar canción</button>
+
+<div id="song5" class="song-block">
+    <audio controls src="Cancion5.mp3"></audio>
+
+    <button class="toggle-btn" onclick="toggleLetra('letra5')">Mostrar / Ocultar letra</button>
+    <div id="letra5" class="letra">
+VERSO 1
+
+El ensayo empieza y todo va mal,
+Ritmo tropieza, ¡qué forma de entrar!
+Melodía canta y tiembla el telón,
+Tono improvisa toda la canción.
+
+PREESTRIBILLO
+
+Pero Silencio toca genial,
+y nos recuerda algo especial:
+
+que cada uno tiene un don,
+aunque no sea de perfección.
+
+ESTRIBILLO
+
+Juntos sonamos mejor,
+aunque a veces salga peor.
+Si cada uno pone su corazón,
+hacemos una gran canción.
+
+Juntos sonamos mejor,
+porque somos un gran equipo.
+Y aunque fallemos un montón,
+¡lo importante es estar unidos!
+
+VERSO 2
+
+Risa se escapa sin avisar,
+Notas se esconden, quieren bailar.
+Pausa se duerme en medio del compás,
+y Aplauso llega tarde, pero llega igual.
+
+PREESTRIBILLO 2
+
+Pero aparece la ilusión,
+y nos levanta la vibración.
+Porque al final lo esencial
+es disfrutar del musical.
+
+ESTRIBILLO (repetición final)
+
+Juntos sonamos mejor,
+aunque a veces salga peor.
+Si cada uno pone su corazón,
+hacemos una gran canción.
+
+Juntos sonamos mejor,
+porque somos un gran equipo.
+Y aunque fallemos un montón,
+¡lo importante es estar unidos!
+
+PUENTE
+
+Si tú te caes, yo te acompaño,
+si yo me pierdo, tú me haces daño…
+
+¡de risa! que así suena mejor,
+¡somos música y calor!
+    </div>
+</div>
+
+<p>
+Sale de escena Clase 5.
+</p>
+<h2 id="acto6">ACTO 6 – EL CONCURSO MUSICAL</h2>
+
+<p>
+(El escenario se transforma en un “gran concurso”. Música de tensión.)<br><br>
+
+(Entra el REY SILENCIO con su capa, muy dramático.)<br><br>
+
+<b>REY SILENCIO:</b> ¡Atención, habitantes del recreo! He venido a asegurarme de que en este concurso… ¡no se cante ni una sola nota!<br><br>
+
+(TONO, MELODÍA, RITMO y SILENCIO entran decididos.)<br><br>
+
+<b>TONO:</b> Majestad… no queremos molestar. Solo queremos participar como todos los años.<br><br>
+
+<b>MELODÍA:</b> La música nos hace felices.<br><br>
+
+<b>RITMO:</b> Y bailar nos une.<br><br>
+
+(SILENCIO hace un gesto de “por favor”.)<br><br>
+
+<b>REY SILENCIO:</b> ¡No! ¡No! ¡No! ¡Silencio para todos! ¡Que no se oiga ni una mosca!<br><br>
+
+(TONO mira al público.)<br><br>
+
+<b>TONO:</b> Chicos… necesitamos vuestra ayuda. Si aplaudís muy fuerte… ¡la música volverá!<br><br>
+
+<b>MELODÍA:</b> ¡Vamos! ¡Palmas arriba!<br><br>
+
+(El público aplaude. Suena un pequeño “ding”.)<br><br>
+
+<b>REY SILENCIO:</b> ¿Pero qué es esto? ¿Quién ha encendido la música? ¡Yo no he dado permiso!<br><br>
+
+(RITMO empieza a moverse con el ritmo.)<br><br>
+
+<b>RITMO:</b> ¡Majestad! ¡Es que el ritmo es contagioso!<br><br>
+
+(MELODÍA canta una nota suave.)<br><br>
+
+<b>MELODÍA:</b> Solo una notita… pequeñita…<br><br>
+
+<b>REY SILENCIO:</b> ¡NO! ¡Ni una! … Bueno… quizá una pequeñita sí.<br><br>
+
+(TONO canta otra nota.)<br><br>
+
+<b>TONO:</b> ¿Y dos?<br><br>
+
+<b>REY SILENCIO:</b> Bueno… dos tampoco hacen daño…<br><br>
+
+(SILENCIO toca la pandereta con gracia.)<br><br>
+
+<b>REY SILENCIO:</b> ¡Ay! ¡Qué gracioso! Está bien… ¡Cantad! ¡Cantad todos! ¡Que empiece la música!<br><br>
+
+Entra en escena Clase 6.<br>
+</p>
+
+<h3>CANCIÓN 6 – La música vive en ti</h3>
+<button class="toggle-btn" onclick="toggleSong('song6')">Mostrar / Ocultar canción</button>
+
+<div id="song6" class="song-block">
+    <audio controls src="Cancion6.mp3"></audio>
+
+    <button class="toggle-btn" onclick="toggleLetra('letra6')">Mostrar / Ocultar letra</button>
+    <div id="letra6" class="letra">
+Hoy la plaza vibra, ya lo puedes notar,
+se mueve la gente, se empieza a animar.
+Niños, profes, padres, todos a girar,
+que el ritmo nos llama y no quiere parar.
+
+Siente cómo el suelo va temblando,
+mira cómo todos van entrando.
+Ritmo en el aire, fuego que no cae,
+súbelo, súbelo, que el cuerpo lo trae.
+
+Ritmo en el aire, nadie se distrae,
+baila conmigo, que el recreo estalla hoy.
+
+Eh, eh.
+
+Gira la cintura, déjate llevar,
+que esto es una fiesta para celebrar.
+Sube la sonrisa, déjala brillar,
+que juntos hacemos el patio vibrar.
+
+Siente cómo el viento va soplando,
+mira cómo todos van cantando.
+Ritmo en el aire, fuego que no cae,
+súbelo, súbelo, que el cuerpo lo trae.
+
+Ritmo en el aire, nadie se distrae,
+baila conmigo, que el recreo estalla hoy.
+
+Eh, eh.
+
+Pa-pa-pa, clap.
+Pa-pa-pa, clap.
+Profes, familias, todos a bailar.
+Ritmo, ritmo, ritmo sin parar.
+Ritmo, ritmo, vamos a brillar.
+
+Hoy la escuela entera se quiere levantar…
+Tres, dos, uno… a bailar.
+Hey.
+    </div>
+</div>
+
+<p>
+Sale de escena Clase 6.
+</p>
+<h2 id="final">ACTO FINAL</h2>
+
+<p>
+<b>TONO:</b> Hoy hemos aprendido algo importante…<br><br>
+
+<b>MELODÍA:</b> Que la música no es solo cantar.<br><br>
+
+<b>RITMO:</b> Ni bailar.<br><br>
+
+(SILENCIO hace un gesto de “corazón”.)<br><br>
+
+<b>TONO:</b> La música vive en cada uno de nosotros.<br><br>
+
+<b>REY SILENCIO:</b> Incluso en mí… aunque a veces me dé dolor de cabeza.<br><br>
+
+(Risas.)<br><br>
+
+<b>MELODÍA:</b> La música está en las risas…<br><br>
+
+<b>RITMO:</b> En los amigos…<br><br>
+
+<b>TONO:</b> En los recreos…<br><br>
+
+(SILENCIO señala al público.)<br><br>
+
+<b>TODOS LOS PROTAGONISTAS:</b> ¡Y también en vosotros!<br><br>
+
+<b>REY SILENCIO:</b> Así que… por esta vez… ¡queda permitido cantar!<br><br>
+
+(Todas las clases levantan los brazos.)<br><br>
+
+<b>TODOS:</b> ¡Gracias por salvar Notalandia!<br><br>
+
+Entran en escena todas las clases a bailar.<br>
+</p>
+
+<h3>CANCIÓN FINAL – Fiesta de fin de curso</h3>
+<button class="toggle-btn" onclick="toggleSong('songFinal')">Mostrar / Ocultar canción</button>
+
+<div id="songFinal" class="song-block">
+    <audio controls src="Cancionfinal.mp3"></audio>
+
+    <button class="toggle-btn" onclick="toggleLetra('letrafinal')">Mostrar / Ocultar letra</button>
+    <div id="letrafinal" class="letra">
+Hoy se acaba el curso, pero empieza el calor,
+toda la escuela junta celebrando el sabor.
+Sube la música, que se sienta el temblor,
+que esta despedida se nos queda en el corazón.
+
+Dale movimiento, que esto va a despegar,
+sube la energía, déjate llevar.
+Hoy nadie se sienta, todos a vibrar,
+que el patio está encendido y no quiere parar.
+
+Vámonos, vámonos encendidos,
+que la fiesta sigue en vivo.
+Vámonos, vámonos conmigo,
+que el ritmo nos tiene unidos.
+
+Fuego, fuego, fuego arriba,
+que la fiesta no termina.
+Fuego, fuego, fuego arriba,
+que la fiesta no termina.
+
+Mira cómo suena, mira cómo va,
+sube la temperatura, empieza a quemar.
+Gira la cintura, déjala volar,
+que esta despedida se hizo pa’ bailar.
+
+Profes y familias se quieren sumar,
+todos en la pista listos pa’ explotar.
+Hoy somos un coro listo pa’ cantar,
+que el año se despide con sabor tropical.
+
+Vámonos, vámonos encendidos,
+que la fiesta sigue en vivo.
+Vámonos, vámonos conmigo,
+que el ritmo nos tiene unidos.
+
+Fuego, fuego, fuego arriba,
+que la fiesta no termina.
+Fuego, fuego, fuego arriba,
+que la fiesta no termina.
+
+El sol se esconde, pero sigue el calor,
+la pista se enciende con cada tambor.
+Hoy celebramos todo lo que pasó,
+mañana empieza el sueño, pero hoy… se armó.
+
+Vámonos, vámonos encendidos,
+que la fiesta sigue en vivo.
+Vámonos, vámonos conmigo,
+que el ritmo nos tiene unidos.
+
+Fuego, fuego, fuego arriba,
+que la fiesta no termina.
+Fuego, fuego, fuego arriba,
+que la fiesta no termina.
+
+Hey, hey, que siga la fiesta,
+hey, hey, que nadie se resta.
+Hey, hey, que el ritmo conecta,
+fin de curso y la vibra perfecta.
+    </div>
+</div>
+
+<p>
+(Confeti. Música final. Saludos.)<br><br>
+Todas las clases salen por los laterales mientras saludan.<br><br>
+<b>FIN</b>
+</p>
+
+</div>
+
+</body>
+</html>
